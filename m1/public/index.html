@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Double</title>
+	</head>
+	<body>
+		<h1>I double the numbers</h1>
+
+		<label for="number">Enter a number:</label>
+		<input type="number" id="number" name="number" required />
+
+		<button onclick="sendRequest()">Submit</button>
+
+		<p id="result"></p>
+
+		<script>
+			async function sendRequest() {
+				const number = parseFloat(
+					document.getElementById("number").value
+				);
+
+				try {
+					const response = await fetch("/double", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ number: number }),
+						timeout: 15000,
+					});
+
+					const data = await response.json();
+
+					document.getElementById(
+						"result"
+					).innerText = `Result: ${data.message}`;
+				} catch (error) {
+					console.error(error);
+					document.getElementById("result").innerText =
+						"Check console for details.";
+				}
+			}
+		</script>
+	</body>
+</html>
