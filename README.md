@@ -26,18 +26,30 @@
 
 ## Инструкция по развертыванию:
 
-## Шаг 1: Запуск RabbitMQ
+### Шаг 1: Запуск RabbitMQ
 
+\```bash
 docker run -d -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+\```
 
-## Шаг 2: Клонирование репозитория
+### Шаг 2: Клонирование репозитория
 
+\```bash
 git clone git@github.com:alibek0298/Green-API.git
+\```
 
-## Шаг 3: Запуск микросервиса M1
+### Шаг 3: Запуск микросервиса M1
 
-3. cd m1 -> npm instal -> npm run start
+\```bash
+cd m1
+npm install
+npm run start
+\```
 
-## Шаг 4: Запуск микросервиса M2
+### Шаг 4: Запуск микросервиса M2
 
-4. cd ../m2 -> npm instal -> npm run start
+\```bash
+cd ../m2
+npm install
+npm run start
+\```
