@@ -4,6 +4,7 @@ const logger = require("./utils/logger");
 const queueName = "number";
 const resultQueueName = "double";
 
+// Function for connecting to RabbitMQ
 async function connectRabbitMQ() {
 	try {
 		const connection = await amqp.connect("amqp://localhost");
@@ -21,6 +22,7 @@ async function connectRabbitMQ() {
 	try {
 		const channel = await connectRabbitMQ();
 
+		// Subscribe to the resultQueueName queue to receive the request
 		channel.consume(queueName, msg => {
 			const number = JSON.parse(msg.content.toString());
 			logger.info(`Get request: ${number}`);
@@ -29,6 +31,7 @@ async function connectRabbitMQ() {
 			channel.ack(msg);
 
 			setTimeout(() => {
+				// Sending a result to the resultQueueName queue
 				channel.sendToQueue(
 					resultQueueName,
 					Buffer.from(JSON.stringify(result))

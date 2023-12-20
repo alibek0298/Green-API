@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 const queueName = "number";
 const resultQueueName = "double";
 
+// Function for connecting to RabbitMQ
 async function connectRabbitMQ() {
 	try {
 		const connection = await amqp.connect("amqp://localhost");
@@ -34,9 +35,12 @@ app.post("/double", [validator(schema)], async (req, res, next) => {
 
 		const channel = await connectRabbitMQ();
 
+		// Sending a number to the queueName queue
 		channel.sendToQueue(queueName, Buffer.from(JSON.stringify(number)));
 
+		// Promise for waiting for the processing result
 		const resultPromise = new Promise(resolve => {
+			// Subscribe to the resultQueueName queue to receive the result
 			channel.consume(resultQueueName, msg => {
 				const parsedResult = JSON.parse(msg.content.toString());
 				channel.ack(msg);
