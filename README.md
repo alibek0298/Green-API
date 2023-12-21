@@ -53,3 +53,9 @@ cd ../m2
 npm install
 npm run start
 ```
+
+### Шаг 5: Использование
+
+```bash
+http://localhost:3000
+```
