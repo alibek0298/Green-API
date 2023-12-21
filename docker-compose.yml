@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    m1:
+        build:
+            context: ./m1
+        ports:
+            - "3000:3000"
+        depends_on:
+            - rabbitmq
+
+    m2:
+        build:
+            context: ./m2
+        depends_on:
+            - rabbitmq
+        command: sh -c "sleep 20 && npm start"
+
+    rabbitmq:
+        image: rabbitmq:management
+        ports:
+            - "5672:5672"
+            - "15672:15672"

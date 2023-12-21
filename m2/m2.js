@@ -7,7 +7,7 @@ const resultQueueName = "double";
 // Function for connecting to RabbitMQ
 async function connectRabbitMQ() {
 	try {
-		const connection = await amqp.connect("amqp://localhost");
+		const connection = await amqp.connect("amqp://rabbitmq");
 		const channel = await connection.createChannel();
 		await channel.assertQueue(queueName, { durable: true });
 		await channel.assertQueue(resultQueueName, { durable: true });
